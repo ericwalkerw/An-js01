@@ -1,5 +1,5 @@
 function convert(nums) {
-  const numLetter = {0: "Không",1: "Một",2: "Hai",3: "Ba",4: "Bốn",
+  const numLetter = {0: "Không",1: "Một ",2: "Hai",3: "Ba",4: "Bốn",
     5: "Năm",6: "Sáu",7: "Bảy",8: "Tám",9: "Chín",10: "Mười"};
 
   const numStr = nums.toString();
@@ -11,7 +11,7 @@ function convert(nums) {
     const position = numLength - i;
 
     if (digit !== 0) {
-      if(position ===1 && digit ===1){
+      if(position ===1 && digit ===1 && numStr[1] != 0){
         result += "Mốt";
       }
       else if (position === 2 && digit === 1 || position === 6 && digit === 1) {
@@ -31,12 +31,13 @@ function convert(nums) {
           default: break;
         }
       }
-    } else {
-      if (position === 2 && numLength >=5) {
+    } 
+    else {
+      if (position === 2 && numLength >=4) {
         result += "Linh ";
       } else if (position === 5 && numLength > 5) {
         result += "Vạn ";
-      } else if (position === 3 && numLength > 3 && numStr[numLength - 4] !== '0') {
+      } else if (position === 3 && numLength > 4 && numStr[4] === '0') {
         result += "Không Trăm ";
       }
     }
