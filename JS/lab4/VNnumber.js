@@ -1,17 +1,6 @@
 function convert(nums) {
-  const numLetter = {
-    0: "Không",
-    1: "Một",
-    2: "Hai",
-    3: "Ba",
-    4: "Bốn",
-    5: "Năm",
-    6: "Sáu",
-    7: "Bảy",
-    8: "Tám",
-    9: "Chín",
-    10: "Mười",
-  };
+  const numLetter = {0: "Không",1: "Một",2: "Hai",3: "Ba",4: "Bốn",
+    5: "Năm",6: "Sáu",7: "Bảy",8: "Tám",9: "Chín",10: "Mười"};
 
   const numStr = nums.toString();
   const numLength = numStr.length;
@@ -43,7 +32,7 @@ function convert(nums) {
         }
       }
     } else {
-      if (position === 2 && numLength <2) {
+      if (position === 2 && numLength >=5) {
         result += "Linh ";
       } else if (position === 5 && numLength > 5) {
         result += "Vạn ";
@@ -52,9 +41,8 @@ function convert(nums) {
       }
     }
   }
-
   return result.trim();
 }
 
-const test = 100051;
+const test = 726503;
 console.log(convert(test));
