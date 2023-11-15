@@ -22,7 +22,10 @@ function convert(nums) {
     const position = numLength - i;
 
     if (digit !== 0) {
-      if (position === 2 && digit === 1 || position === 6 && digit === 1) {
+      if(position ===1 && digit ===1){
+        result += "Mốt";
+      }
+      else if (position === 2 && digit === 1 || position === 6 && digit === 1) {
         result += "Mười ";
       } else if (position === 2 && digit >= 2) {
         result += numLetter[digit] + " Mươi ";
@@ -53,5 +56,5 @@ function convert(nums) {
   return result.trim();
 }
 
-const test = 100020;
+const test = 100051;
 console.log(convert(test));
