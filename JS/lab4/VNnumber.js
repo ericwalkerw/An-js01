@@ -1,0 +1,49 @@
+  function convert(nums) {
+    const numLetter = { 0: "Không", 1: "Một", 2: "Hai", 3: "Ba", 4: "Bốn",
+      5: "Năm", 6: "Sáu", 7: "Bảy", 8: "Tám", 9: "Chín", 10: "Mười"};
+
+    const numStr = nums.toString();
+    const numLength = numStr.length;
+    let result = '';
+  
+    for (let i = 0; i < numLength; i++) {
+      const digit = parseInt(numStr[i]);
+      const position = numLength - i;
+  
+      if(digit ===0){
+        result += "Linh ";
+      }
+      if (digit !== 0) {
+      if (position === 2 && digit === 1) {
+        result += "Mười ";
+      } 
+      else if (position === 2 && digit >= 2){
+        result += numLetter[digit] + " Mươi ";
+      }
+      else {
+        result += numLetter[digit];
+  
+      switch (position) {
+        case 1: result += " "; break;
+        case 2: result += " "; break;
+        case 3: result += " Trăm "; break;
+        case 4: result += " Ngàn "; break;
+        case 5: result += " Vạn "; break;
+        case 6: result += " Mươi "; break;
+        default: break;
+          }
+        }
+      } else {
+        if (position === 3 && numLength > 3 && numStr[numLength - 4] !== '0') {
+          result += " Không Trăm ";
+        } else if (position === 6 && numLength > 6 && numStr[numLength - 7] !== '0') {
+          result += " Không Nghìn ";
+        }
+      }
+    }
+    return result.trim();
+  }
+  
+  const test = 78673;
+  console.log(convert(test));
+  
