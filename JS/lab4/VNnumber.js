@@ -1,15 +1,12 @@
 function convert(nums) {
   const numLetter = {0: "Không",1: "Một ",2: "Hai",3: "Ba",4: "Bốn",
     5: "Năm",6: "Sáu",7: "Bảy",8: "Tám",9: "Chín",10: "Mười"};
-
   const numStr = nums.toString();
   const numLength = numStr.length;
   let result = '';
-
   for (let i = 0; i < numLength; i++) {
     const digit = parseInt(numStr[i]);
     const position = numLength - i;
-
     if (digit !== 0) {
       if(position ===1 && digit ===1 && numStr[1] != 0){
         result += "Mốt";
@@ -21,7 +18,6 @@ function convert(nums) {
       }
       else {
         result += numLetter[digit];
-
         switch (position) {
           case 1: result += " "; break;
           case 3: result += " Trăm "; break;
