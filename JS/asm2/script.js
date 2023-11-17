@@ -8,8 +8,8 @@ ctx.translate(radius, radius);
 radius *= 0.95;
 
 function setTime(hours, minutes, day, month, year){
-    timeEl.textContent = `${hours}:${minutes}`;
-    dayEl.textContent = `${day} ${month} ${year}`;
+    timeEl.textContent = `${hours}:${minutes.toString().padStart(2,'0')}`;
+    dayEl.textContent = `${day}, ${month} ${year}`;
 }
 
 function drawClock() {
@@ -28,16 +28,16 @@ function drawFace() {
 
 function drawTime() {
     const { hours, minutes, seconds } = getCurrentTime();
-    drawHand(hours, radius * 0.5, radius * 0.04, "white");
+    drawHand(hours, radius * 0.4, radius * 0.04, "white");
     drawHand(minutes, radius * 0.6, radius * 0.025, "purple");
     drawHand(seconds, radius * 0.8, radius * 0.01, "white");
 }
 
 function getCurrentTime() {
     const now = new Date();
-    const dayOfWeek = now.toLocaleDateString('en-US', { weekday: 'short' });
+    const dayOfWeek = now.toLocaleDateString('en-US', { weekday: 'long' });
     const month = now.toLocaleDateString('en-US', { month: 'short' });
-    setTime(now.getHours(), now.getMinutes(), dayOfWeek, month, now.getFullYear());
+    setTime(now.getHours(), now.getMinutes(), dayOfWeek, month, now.getDate());
     const hours = (now.getHours() % 12) * Math.PI / 6 + (now.getMinutes() * Math.PI / (6 * 60)) + (now.getSeconds() * Math.PI / (360 * 60));
     const minutes = now.getMinutes() * Math.PI / 30 + now.getSeconds() * Math.PI / (30 * 60);
     const seconds = now.getSeconds() * Math.PI / 30;
