@@ -17,7 +17,7 @@ function createCard(color) {
 }
 
 function createBoard() {
-  shuffle(colors);
+  //shuffle(colors);
   colors.forEach(createCard);
 }
 
@@ -52,7 +52,7 @@ function resetCards(card1, card2) {
 }
 
 function countScore(ismath){
-  ismath? score+=1000 : score-=500;
+  ismath? score += 1000 : score -= 500;
   scoreEl.textContent = `SCORE: ${score}`;
 }
 
