@@ -2,8 +2,8 @@ import { Card } from "./src/Card.js";
 const NUM_COLUMNS = 5;
 const NUM_ROWS = 4;
 const TOTAL_CARDS = NUM_COLUMNS * NUM_ROWS;
-const BOARD_SIZE = 160;
-const CARD_SIZE = 150;
+const BOARD_SIZE = 190;
+const CARD_SIZE = 180;
 const ANIM_DURATION = 0.6;
 const imageAssets = [
   "./Image/sword.jpg",
