@@ -46,6 +46,6 @@ export class Node {
       this.elm.appendChild(node.elm);
   }
   removeChild(node) {
-       // todo
+       
   }
 }

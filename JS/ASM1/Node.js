@@ -1,5 +1,3 @@
-import {Sprite} from "Sprite.js"
-
 export class Node {
     constructor() {
         this._sprite = new Sprite();
