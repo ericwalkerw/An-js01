@@ -3,13 +3,17 @@ export class Node {
       this.elm = this._createElement();
       this.children = [];
       this.scaleX = 1;
+      this.scaleY = 1;
+      this.blur = 1;
   }
   get x() { return this._x; }
   get y() { return this._y; }
   get width(){return this._width;}
   get height(){return this._height;}
   get scaleX(){return this._scaleX;}
+  get scaleY(){return this._scaleY;}
   get active(){return this._active;}
+  get blur(){return this._opacity;}
   set x(value) {
       this._x = value;
       this.elm.style.left = this._x + "px";
@@ -28,7 +32,15 @@ export class Node {
   }
   set scaleX(value){
     this._scaleX = value;
-    this.elm.style.transform = `scaleX(${value})`
+    this.elm.style.transform = `scale(${this.scaleX},${this.scaleY})`
+  }
+  set scaleY(value){
+    this._scaleY = value;
+    this.elm.style.transform = `scale(${this.scaleX},${this.scaleY})`
+  }
+  set blur(value){
+    this._opacity = value;
+    this.elm.style.opacity = value;
   }
   set active(value){
     this._active = value;
@@ -46,6 +58,7 @@ export class Node {
       this.elm.appendChild(node.elm);
   }
   removeChild(node) {
-       // todo
+       this.children.pop(node);
+       this.elm.removeChild(node.elm);
   }
 }

@@ -1,70 +1,93 @@
 import { Card } from "./src/Card.js";
-const NUM_COLUMNS = 5;
-const NUM_ROWS = 4;
-const TOTAL_CARDS = NUM_COLUMNS * NUM_ROWS;
-const BOARD_SIZE = 190;
-const CARD_SIZE = 180;
-const ANIM_DURATION = 0.6;
-const imageAssets = [
-  "./Image/sword.jpg",
-  "./Image/amulet.jpg",
-  "./Image/glasses.jpeg",
-  "./Image/hammer.jpeg",
-  "./Image/helmet.jpg",
-  "./Image/jacket.jpeg",
-  "./Image/jew.jpg",
-  "./Image/pc.jpeg",
-  "./Image/phone.jpeg",
-  "./Image/ring.jpeg",
-];
+import { Label } from "./src/Label.js";
 
-let coverAsset = "./question.png";
-const containerEl = document.querySelector(".container");
-let openedCards = [];
-let matchedCards = [];
-
-const shuffle = (array) => array.sort(() => Math.random() - 0.5);
-const anim = (card, value) => {
-    gsap.to(card._node, { scaleX: 0, duration: ANIM_DURATION, onComplete: () => card.show(value) });
-    gsap.to(card._node, { scaleX: 1, duration: ANIM_DURATION, delay: ANIM_DURATION });
-};
-function checkMatch() {
-  const [card1, card2] = openedCards;
-  const isMatch = card1.index === card2.index;
-  if (isMatch) {
-    matchedCards.push(card1, card2);
-    if (matchedCards.length === TOTAL_CARDS) {
-      alert("Congratulations! You won!");
+class Game {
+  constructor() {
+    this.arr = [
+      "./Image/amulet.jpg",
+      "./Image/sword.jpg",
+      "./Image/glasses.jpeg",
+      "./Image/ring.jpeg",
+      "./Image/pc.jpeg",
+      "./Image/helmet.jpg",
+      "./Image/hammer.jpeg",
+      "./Image/phone.jpeg",
+      "./Image/jacket.jpeg",
+      "./Image/jew.jpg",
+    ];
+    this.init();
+    this.openedCards = [];
+    this.matchCards = [];
+    this.SCORE = 10000;
+  }
+  shuffle = (array) => array.sort(() => Math.random() - 0.5);
+  init() {
+    this.createText();
+    const shuffledArr = this.shuffle([...this.arr, ...this.arr]);
+    const shuffledArr2 = [...this.arr, ...this.arr];
+    this.createBoard(shuffledArr2);
+  }
+  createText(){
+    const scoreEl = document.querySelector(".Score");
+    const score_txt = new Label('SCORE : 10000'); 
+    score_txt.size = 38;
+    score_txt.font = "arial";
+    // score_txt.color = '';
+    scoreEl.appendChild(score_txt.elm);
+  }
+  createCard(image, cover) {
+    const containerEl = document.querySelector(".container");
+    const card = new Card(image, cover);
+    card.show(0);
+    containerEl.appendChild(card._node.elm);
+    return card;
+  }
+  createBoard(arr) {
+    for (let i = 0; i < 20; i++) {
+      const newCard = this.createCard(arr[i], "./question.png");
+      newCard._node.x = 170 * (i % 5);
+      newCard._node.y = 190 * Math.floor(i / 5);
+      newCard._node.elm.onclick = () => {
+        this.clickHandler(newCard);
+      };
     }
-  } else {
+  }
+  clickHandler(card) {
+    if (
+      this.openedCards.length <= 1 &&
+      !this.openedCards.includes(card) &&
+      !this.matchCards.includes(card)
+    ) {
+      card.flip(0.6);
+      this.openedCards.push(card);
+      console.log(this.openedCards);
+      if (this.openedCards.length === 2) {
+        this.checkMatch();
+        if (this.matchCards.length === 20) {
+          setTimeout(() => {
+            alert("WIN GAME");
+          }, 1000);
+        }
+      }
+    }
+    return;
+  }
+  checkMatch() {
+    const [card1, card2] = this.openedCards;
+    console.log(card1._image._id, card2._image._id);
+    const isMatch = card1._image._id === card2._image._id;
+    if (isMatch) {
+      this.matchCards.push(card1, card2);
+      card1.matchAnim(1.4, 1);
+      card2.matchAnim(1.4, 1);
+    } else {
+      card1.flip(0.6, 1.5);
+      card2.flip(0.6, 1.5);
+    }
     setTimeout(() => {
-        anim(card1, false);
-        anim(card2, false);
-    }, 1500);
-    openedCards = [];
+      this.openedCards = [];
+    }, 2500);
   }
 }
-(function init() {
-  let allCards = [];
-  const shuffledImages = shuffle([...imageAssets, ...imageAssets]);
-  for (let i = 0; i < TOTAL_CARDS; i++) {
-    const card = new Card(shuffledImages[i], shuffledImages[i], coverAsset);
-    card._node.width = card._node.height = CARD_SIZE;
-    card._node.x = BOARD_SIZE * (i % NUM_COLUMNS);
-    card._node.y = BOARD_SIZE * Math.floor(i / NUM_COLUMNS);
-    allCards.push(card);
-    card._node.elm.addEventListener("click", () => {
-        if (openedCards.length <= 2 && !matchedCards.includes(card)) {
-            anim(card, true);
-            openedCards.push(card);
-            if (openedCards.length === 2) {
-              checkMatch();
-            }
-          }
-    });
-  }
-  allCards = shuffle(allCards);
-  allCards.forEach((element) => {
-    containerEl.appendChild(element._node.elm);
-  });
-})();
+
+const game = new Game();
