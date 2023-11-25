@@ -3,53 +3,53 @@ import { Sprite } from "./sprite.js";
 
 export class Card {
   constructor(src, cover) {
-    this._node = new Node();
-    this._image = new Sprite(src);
-    this._cover = new Sprite(cover);
-    this._node.addChild(this._cover);
-    this._node.addChild(this._image);
+    this.node = new Node();
+    this.img = new Sprite(src);
+    this.cover = new Sprite(cover);
+    this.node.addChild(this.cover);
+    this.node.addChild(this.img);
     this.active = false;
     this.SIZE = 160;
-    this._node.width = this.SIZE;
-    this._node.height = this.SIZE + 20;
+    this.node.width = this.SIZE;
+    this.node.height = this.SIZE + 20;
     this.isFlipped = false;
   }
-  get active() {return this._active;}
-  set active(value) {
-    this._active = value;
-    this._image.active = value
-    this._cover.active = !value;
+  get _active() {return this.active;}
+  set _active(value) {
+    this.active = value;
+    this.img.active = value
+    this.cover.active = !value;
   }
   show(value) {
     this.active = value;
   }
-  flip(dur, delay=0){
-    gsap.to(this._node,{
-      scaleX:0, duration:dur,delay, onComplete:()=>{
-        this.show(!this._active);
-        this.isFlipped = true;
-      }
-    })
-    gsap.to(this._node, {scaleX:1, duration:dur, delay:dur+delay,
-    onComplete:()=> {
-      this.isFlipped = false;
-    }});
-  }
-  matchAnim(size, dur){
-    gsap.to(this._node, {
-      scaleX: size,
-      scaleY: size,
-      duration: dur,
-      delay:dur,
-      onComplete: () => {
-        gsap.to(this._node, {
-          blur: 0,
-          duration: dur,
-          onComplete: () => {
-            this._node.removeChild(this._image);
-          },
-        });
-      },
-    });
-  }
+//   flip(dur, delay=0){
+//     gsap.to(this.node,{
+//       scaleX:0, duration:dur,delay, onComplete:()=>{
+//         this.show(!this.active);
+//         this.isFlipped = true;
+//       }
+//     })
+//     gsap.to(this.node, {scaleX:1, duration:dur, delay:dur+delay,
+//     onComplete:()=> {
+//       this.isFlipped = false;
+//     }});
+//   }
+//   matchAnim(size, dur){
+//     gsap.to(this.node, {
+//       scaleX: size,
+//       scaleY: size,
+//       duration: dur,
+//       delay:dur,
+//       onComplete: () => {
+//         gsap.to(this.node, {
+//           blur: 0,
+//           duration: dur,
+//           onComplete: () => {
+//             this.node.removeChild(this.image);
+//           },
+//         });
+//       },
+//     });
+//   }
 }
